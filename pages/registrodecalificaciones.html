@@ -34,12 +34,17 @@
         <h2 class="inscripcionesForm">Registro de Calificaciones</h2>
         <p style="text-align: left">Sr.Docente:
             <ul>
-                <li>Recuerde que cada profesor debe estar previamente registrado.</li>
-                <li>Ingrese su nombre y a continuación comienze la carga de calificaciones.</li>
+                <li>Recuerde que cada profesor debe estar previamente registrado. </li>
+                <li>Si no figura en la lista, regístrese.</li>
+                <li>Podrá obtener un promedio parcial de las notas de su alumno al final de la carga.</li>
             </ul>
         <br> 
-        
-        <div class="mb-3">
+            <div class="form-group">
+                <label for="exampleFormControlSelect2">Seleccionar Docente</label>
+                <select multiple class="form-control" id="selectordocentes">
+                </select>
+            </div>
+            <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Nombre del Docente</label>
                 <input type="text" class="form-control" id="nombreDocente" placeholder="Ingrese el nombre del Profesor">
                 <label for="exampleFormControlInput1" class="form-label">Materia</label>
@@ -47,12 +52,6 @@
                 <br> 
                  <button type="submit" class="btn btn-primary" id="registrarProfesor">Registrar Profesor y Materia</button>
                 <br>
-        <div class="form-group">
-                <label for="exampleFormControlSelect2">Seleccionar Docente</label>
-                <select multiple class="form-control" id="selectordocentes">
-                </select>
-        </div>
-            </div>
             <div class="col-12" id="containerAlumnos">
                 <label for="inputAddress" class="form-label">Cargue su alumno</label>
                 <input type="text" class="form-control" id="alumnos" placeholder="Ingrese el nombre de su alumno">

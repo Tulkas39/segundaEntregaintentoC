@@ -41,13 +41,13 @@ const profesores = [
 ];
 
 
-//guardar en localstorage
+//guardar 
 function guardardocenteLS() {
     localStorage.setItem("profesores", JSON.stringify(profesores));
     
 }
 
-//cargar datos al iniciar
+//cargar 
 function cargarDatosLS() {
     const profesoresGuardados = localStorage.getItem("profesores");
     if (profesoresGuardados) {
@@ -57,7 +57,6 @@ function cargarDatosLS() {
         cargarDocentes(); 
     }
 }
-
 
 //funcion agregar profesores
 const formProfesores = document.getElementById ('formProfesores');
@@ -89,9 +88,7 @@ function agregarProfesor(event) {
 }
 buttonAgregarProfesor.addEventListener('click', agregarProfesor);
 
-
 //agregar docentes al menú selector
-
 function cargarDocentes() {
     const selectordocentes = document.getElementById ('selectordocentes')
     selectordocentes.innerHTML = '';
@@ -103,9 +100,7 @@ function cargarDocentes() {
     });
 }
 
-
 //seleccionar docente
-
 document.getElementById('selectordocentes').addEventListener('change', function() {
     const profesorId = parseInt(this.value);
     if (profesorId) {
@@ -113,13 +108,10 @@ document.getElementById('selectordocentes').addEventListener('change', function(
         if (profesor) {
             console.log (`Alumnos de ${profesor.nombre}:`, profesor.alumnos);
             mostrarAlumnos(profesorId);
-            // Aquí puedes agregar código para mostrar los alumnos en el DOM
         }
     }
 });        
   
-
-
 function mostrarAlumnos(profesorId) {
     const profesor = profesores.find (p => p.id === profesorId);
     if (profesor) {
@@ -128,9 +120,6 @@ function mostrarAlumnos(profesorId) {
     
 }
 
-
-
-const containerAlumnos = document.getElementById("containerAlumnos")
 const inputAlumnos = document.getElementById("alumnos")
 const inputCalificacionFinal = document.getElementById("calificacionFinal");
 const buttonEnviarCalificacion = document.getElementById("enviarCalificacion")
@@ -188,18 +177,17 @@ function obtenerPromedio (nuevoAlumno) {
     const promedioAlumno = nuevoAlumno.calificaciones.reduce ((sum, nota) => sum + nota, 0) / nuevoAlumno.calificaciones.length;
     const promedioRedondeado = promedioAlumno.toFixed(2);
     if (promedioAlumno >= 7) {
-    mensajeCalificacionFinal.innerHTML = nuevoAlumno.nombre + (" está aprobada con una calificación de " + promedioAlumno);
+    mensajeCalificacionFinal.innerHTML = nuevoAlumno.nombre + (" está aprobada con una calificación promedio de " + promedioAlumno);
    
     
 } else {
-    mensajeCalificacionFinal.innerHTML = nuevoAlumno.nombre + (" está DESAPROBADO con una calificación de " + promedioAlumno);
+    mensajeCalificacionFinal.innerHTML = nuevoAlumno.nombre + (" está DESAPROBADO con una calificación promedio de " + promedioAlumno);
     
 }
 };
 buttonEnviarCalificacion.addEventListener ('click', agregarAlumno)
 cargarDatosLS(); 
 cargarDocentes();
-
 
 
 // Estaba tratando de obtener un promedio de las calificaciones de todas las materias de un alumno
