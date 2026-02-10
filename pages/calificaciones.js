@@ -134,6 +134,7 @@ const containerAlumnos = document.getElementById("containerAlumnos")
 const inputAlumnos = document.getElementById("alumnos")
 const inputCalificacionFinal = document.getElementById("calificacionFinal");
 const buttonEnviarCalificacion = document.getElementById("enviarCalificacion")
+
 //agregaralumno
 function agregarAlumno(event){
     event.preventDefault();
@@ -155,23 +156,31 @@ function agregarAlumno(event){
         alert('Por favor ingresa una calificación válida entre 1 y 10');
         return;
     }
+    const alumnoCargado = profesor.alumnos.find (a => a.nombre === nombreAlumno);
+    if (alumnoCargado) {
+        alumnoCargado.calificaciones.push(calificacion);
+        obtenerPromedio(alumnoCargado)   
+    }
+    else {
        const nuevoAlumno = {
         id: profesor.alumnos.length > 0 ? Math.max(...profesor.alumnos.map(a => a.id)) + 1 : 1,
         nombre: nombreAlumno,
         calificaciones: [calificacion]
+       }
+        profesor.alumnos.push(nuevoAlumno);
+        console.log(`Alumno ${nombreAlumno} agregado a ${profesor.nombre}con calificación ${calificacion}`);
+        inputAlumnos.value = '';
+        inputCalificacionFinal.value = '';
+        obtenerPromedio(nuevoAlumno)
+        guardardocenteLS()
+        mostrarAlumnos(profesorId);
    };
-    profesor.alumnos.push(nuevoAlumno);
-    console.log(`Alumno ${nombreAlumno} agregado a ${profesor.nombre}con calificación ${calificacion}`);
-    evaluar (nuevoAlumno);
-    inputAlumnos.value = '';
-    inputCalificacionFinal.value = '';
-    guardardocenteLS()
-    mostrarAlumnos(profesorId);
+
 }
 
 //funcion aprobar/desaprobar alumno
 
-function evaluar (nuevoAlumno) {
+function obtenerPromedio (nuevoAlumno) {
     const mensajeCalificacionFinal = document.getElementById('mensajeCalificacionFinal');
 
     if (!mensajeCalificacionFinal) return;
@@ -179,22 +188,36 @@ function evaluar (nuevoAlumno) {
     const promedioAlumno = nuevoAlumno.calificaciones.reduce ((sum, nota) => sum + nota, 0) / nuevoAlumno.calificaciones.length;
     const promedioRedondeado = promedioAlumno.toFixed(2);
     if (promedioAlumno >= 7) {
-    mensajeCalificacionFinal.innerHTML = nuevoAlumno.nombre + (" está PROMOCIONADO con una calificación promedio de " + promedioAlumno);
+    mensajeCalificacionFinal.innerHTML = nuevoAlumno.nombre + (" está aprobada con una calificación de " + promedioAlumno);
    
     
 } else {
-    mensajeCalificacionFinal.innerHTML = nuevoAlumno.nombre + (" está DESAPROBADO con una calificación promedio de " + promedioAlumno);
+    mensajeCalificacionFinal.innerHTML = nuevoAlumno.nombre + (" está DESAPROBADO con una calificación de " + promedioAlumno);
     
 }
-}
-
-
-//escucharlafuncion
-
+};
 buttonEnviarCalificacion.addEventListener ('click', agregarAlumno)
-
-   
-
-//comenzar
 cargarDatosLS(); 
 cargarDocentes();
+
+
+
+// Estaba tratando de obtener un promedio de las calificaciones de todas las materias de un alumno
+
+/*function obtenerCalificacionesAlumno(nombreAlumno) {
+    const calificacionesPorMateria = [];
+    profesores.forEach (profesor => {
+        const alumno = profesor.alumnos.find (a => a.nombre === nombreAlumno);
+        if (alumno) {
+            calificacionesPorMateria.push ({
+                materia: profesor.materia,
+                profesor: profesor.nombre,
+                calificaciones: alumno.calificaciones})
+    }})
+    return calificacionesPorMateria;
+}
+
+const calificacionesVictoria = obtenerCalificacionesAlumno ("Victoria Stalloca");
+console.log (calificacionesVictoria);
+*/    
+
