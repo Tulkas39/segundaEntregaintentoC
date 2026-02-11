@@ -76,7 +76,6 @@ function agregarProfesor(event) {
                 alumnos: []
         };
             profesores.push(nuevoProfesor);
-            console.log(profesores);
             inputProfesores.value = '';
             inputMateria.value = '';
             guardardocenteLS();
@@ -105,21 +104,11 @@ document.getElementById('selectordocentes').addEventListener('change', function(
     const profesorId = parseInt(this.value);
     if (profesorId) {
         const profesor = profesores.find(p => p.id === profesorId);
-        if (profesor) {
-            console.log (`Alumnos de ${profesor.nombre}:`, profesor.alumnos);
-            mostrarAlumnos(profesorId);
+
         }
     }
-});        
+);        
   
-function mostrarAlumnos(profesorId) {
-    const profesor = profesores.find (p => p.id === profesorId);
-    if (profesor) {
-        console.log(`Mostrando alumnos de ${profesor.nombre}:`, profesor.alumnos);
-    }
-    
-}
-
 const inputAlumnos = document.getElementById("alumnos")
 const inputCalificacionFinal = document.getElementById("calificacionFinal");
 const buttonEnviarCalificacion = document.getElementById("enviarCalificacion")
@@ -157,13 +146,11 @@ function agregarAlumno(event){
         calificaciones: [calificacion]
        }
         profesor.alumnos.push(nuevoAlumno);
-        console.log(`Alumno ${nombreAlumno} agregado a ${profesor.nombre}con calificación ${calificacion}`);
         inputAlumnos.value = '';
         inputCalificacionFinal.value = '';
         obtenerPromedio(nuevoAlumno)
         guardardocenteLS()
-        mostrarAlumnos(profesorId);
-   };
+    };
 
 }
 
